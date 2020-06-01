@@ -4,5 +4,66 @@
 }
 
 body {
-    background-color: beige;
+    text-align: center;
+} 
+
+.top-container {
+    background-color: #bbf1c8;
+    position: relative;
+    height: 100vh;
+    padding-top: 28vh;
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+}
+
+.cloud-top {
+    position: absolute;
+    top: 100px;
+    right: 400px;
+} 
+
+.cloud-bottom {
+    position: absolute;
+    left: 400px;
+} 
+
+h1 {
+    color: #0e9aa7;
+    margin: 3rem;
+}
+
+h3 {
+    color: #679b9b;
+    margin: 3rem;
+}
+
+.skill-row {
+    width: 50%;
+    margin: 100px auto 100px auto;
+    text-align: center;
+    height: 270px;
+}
+
+.img-1 {
+    width: 25%;
+    float: left;
+    margin: 2rem;
+    margin-right: 30px;
+}   
+
+.img-2 {
+    width: 25%;
+    float: right;
+}
+
+.profile {
+    margin: 2rem;
+}
+
+.par-1 {
+    clear: left;
+}
+
+.par-2 {
+    clear: right;
 }
