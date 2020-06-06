@@ -31,3 +31,7 @@ document.addEventListener("keydown", function (event) {
     PlayAudio("l");
   }
 });
+
+function lol() {
+  console.log("lol");
+}
