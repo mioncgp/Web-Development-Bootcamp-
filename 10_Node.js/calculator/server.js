@@ -10,7 +10,7 @@ app.get("/", function (req, res) {
 
 app.post("/", function (req, res) {
   const num1 = Number(req.body.num1);
-  const num2 = Number(eq.body.num2);
+  const num2 = Number(req.body.num2);
   const result = num1 + num2;
   res.send(`The result is:  ${result}`);
 });
