@@ -32,11 +32,14 @@ const item3 = new Item({
   name: "there is to delete an item",
 });
 
-const item4 = new Item({
-  name: "there is to delete an item",
-});
+const defaultItems = [item1, item2, item3];
 
-const defaultItems = [item1, item2, item3, item4];
+const listSchema = {
+  name: String,
+  items: [schemaItems],
+};
+
+const List = mongoose.model("List", listSchema);
 
 let workItems = [];
 
@@ -54,34 +57,30 @@ app.get("/", function (req, res) {
     } else {
       res.render("list", {
         listTitle: "Today",
-        newListItems: foundItems,
+        newListItems: defaultItems,
       });
     }
   });
 });
 
-app.get("/work", function (req, res) {
-  res.render("list", { listTitle: "Work", newListItems: workItems });
-});
-
-app.post("/work", function (req, res) {
-  let item = req.body.newItem;
-
-  workItems.push(item);
-
-  res.redirect("/work");
-});
-
 app.post("/", function (req, res) {
   let itemName = req.body.newItem;
+  const listName = req.body.list;
 
   const newItem = new Item({
     name: itemName,
   });
 
-  newItem.save();
-
-  res.redirect("/");
+  if (listName === "Today") {
+    newItem.save();
+    res.redirect("/");
+  } else {
+    List.findOne({ name: listName }, function (err, foundList) {
+      foundList.items.push(newItem);
+      foundList.save();
+      res.redirect("/" + listName);
+    });
+  }
 });
 
 app.post("/delete", function (req, res) {
@@ -90,6 +89,37 @@ app.post("/delete", function (req, res) {
     console.log("removed");
   });
   res.redirect("/");
+});
+
+app.get("/:customListName", function (req, res) {
+  const customListName = req.params.customListName;
+
+  List.findOne({ name: customListName }, function (err, foundList) {
+    if (!err) {
+      if (!foundList) {
+        const list = new List({
+          name: customListName,
+          items: defaultItems,
+        });
+
+        list.save();
+        res.redirect("/" + customListName);
+      } else {
+        res.render("list", {
+          listTitle: foundList.name,
+          newListItems: foundList.items,
+        });
+      }
+    }
+  });
+});
+
+app.post("/work", function (req, res) {
+  let item = req.body.newItem;
+
+  workItems.push(item);
+
+  res.redirect("/work");
 });
 
 app.get("/about", function (req, res) {
