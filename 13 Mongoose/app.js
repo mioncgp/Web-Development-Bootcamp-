@@ -24,14 +24,6 @@ const person3 = new Person({
   age: 33,
 });
 
-// Person.insertMany([person2, person3], function (err) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("Success");
-//   }
-// });
-
 Person.find(function (err, person) {
   if (err) {
     console.log(err);
